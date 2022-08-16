@@ -1,0 +1,121 @@
+* {
+    font-family: sans-serif;
+    /* outline: 1px solid red; */
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #E5E5E5;
+    padding-top: 50px;
+}
+
+.main-nav {
+    background-color: #14213D;
+    padding: 10px;
+    position: fixed;
+    font-weight: bold;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}
+    .main-nav a {
+        text-decoration: none;
+        color: white;
+        font-size: 1.5rem;
+    }
+    .main-nav #nav-login-cart {
+        position: absolute;
+        right: 10px;
+        line-height: 25px;
+    }
+        #nav-login-cart a {
+            font-size: 1rem;
+        }
+        #cart {
+            margin-left: 20px;
+            color: #FCA311;
+        }
+
+.container {
+    width: 1200px;
+    margin: 10px auto;
+    min-height: 500px;
+}
+    div.container > a {
+        color: #FCA311;
+    }
+    article {
+        position: relative;
+        padding: 10px;
+        background-color: white;
+        padding-bottom: 40px;
+    }
+        .container .images {
+            display: inline-block;
+            width: 218px;
+            text-align: center;
+            margin-right: 30px;
+        }
+            .images img {
+                width: 200px;
+            }
+                .images .mini-images {
+                    display: inline-block;
+                }
+                    .mini-images img {
+                        width: 40px;
+                    }
+
+        p {
+            display: inline-block;
+            vertical-align: top;
+            width: 900px;
+            text-align: justify;
+        }
+
+        form {
+            position: absolute;
+            right: 10px;
+        }
+            form input[type="number"] {
+                width: 50px;
+            }
+            form input[type="submit"] {
+                background-color: #FCA311;
+                color: white;
+                padding: 5px 10px;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+    
+    .container h2 {
+        margin-top: 25px;
+    }
+
+    .container .products-search{
+        display: inline-block;
+        text-align: center;
+        width: 180px;
+        position: relative;
+    }
+        .products-search a {
+            text-decoration: none;
+            height: 100%;
+        }
+        .products-search img {
+            width: 100px;
+        }
+        .products-search p {
+            background-color: #FCA311cc;
+            top: 66px;
+            right: 40px;
+            position: absolute;
+            width: 100px;
+            color: white;
+            text-align: right;
+        }
+        .products-search h3 {
+            margin-top: 5px;
+            color: black;
+        }
