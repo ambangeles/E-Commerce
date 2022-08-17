@@ -27,14 +27,14 @@
 
 <body>
     <nav class="main-nav">
-        <a href="/">Core</a>
+        <a href="/products/catalog">Core</a>
         <span id="nav-login-cart">
-            <a href="/login">Log In</a>
-            <a id="cart" href="/cart">Shopping Cart (#)</a>
+            <a href="/">Log In</a>
+            <a id="cart" href="/carts">Shopping Cart (#)</a>
         </span>
     </nav>
     <div class="container">
-        <a href="/">Go Back</a>
+        <a href="/products/category">Go Back</a>
         <h1>######</h1>
         <article>
             <div class="images">

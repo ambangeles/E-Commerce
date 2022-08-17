@@ -1,7 +1,11 @@
     <nav class="main-nav">
-        <a href="/">Core</a>
+        <a href="/products/category">Core</a>
         <span id="nav-login-cart">
-            <a href="#">Log In</a>
-            <a id="cart" href="#">Shopping Cart (#)</a>
+<?php if($this->session->userdata("is_logged") === NULL) {?>
+            <a href="/">Log In</a>
+<?php } else { ?>
+            <a href="/logout">Log Out</a>
+<?php }?>
+            <a id="cart" href="/carts">Shopping Cart (#)</a>
         </span>
     </nav>

@@ -1,8 +1,8 @@
 * {
     font-family: sans-serif;
-    /* outline: 1px solid red; */
     box-sizing: border-box;
 }
+
 body {
     background-color: #E5E5E5;
     padding-top: 50px;
@@ -29,4 +29,8 @@ body {
     }
         #nav-login-cart a {
             font-size: 1rem;
+        }
+        #cart {
+            margin-left: 20px;
+            color: #FCA311;
         }

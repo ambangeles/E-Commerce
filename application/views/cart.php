@@ -12,10 +12,10 @@
 
 <body>
     <nav class="main-nav">
-        <a href="/">Core</a>
+        <a href="/products/category">Core</a>
         <span id="nav-login-cart">
-            <a href="/login">Login</a>
-            <a id="cart" href="/cart">Shopping Cart (#)</a>
+            <a href="/">Login</a>
+            <a id="cart" href="/carts">Shopping Cart (#)</a>
         </span>
     </nav>
     <div class="container">
