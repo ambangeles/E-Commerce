@@ -15,30 +15,54 @@
             //     // $("body").html(res.html);
             //     // $("h1").html(`${res.category_name} (page ${res.page})`);
             // }, "json");
+            $('form').submit(function(){
+                
+                $.post($("form").attr("action"), $(this).serialize(), function(res) {
+                    $("body").html(res);
+                });
+                return false;
+            });
 
-            // $(document).on("click", ".category", function () {
+            // $("input").keyup(function() {
+            //     $("form").submit();
+            // })
 
-            //     let page_url = $(this).attr("href");
-            //     console.log($(this).text());
-            //     history.pushState(null, '', page_url)
-            //     $.get(page_url, function (res) {
-            //         $("body").html(res);
-            //         $("h1").html($(this).text());
-            //     });
-            //     return false;
-            // });
+            $("#search-form").keyup(function () { 
+                // $(this).prop("disabled", true);
+                $("form").submit();
+            });
+
+            $(document).on("click", ".category", function () {
+                let page_url = $(this).attr("href");
+                $(this).prop("disabled", true);
+                $.get(page_url, function (res) {
+                    $("body").html(res);
+                    $("title").text("(Products Page) <?php echo $category_type ?> (page <?php echo $page ?>) | Core");
+                    history.pushState(null, '', page_url);
+                });
+                return false;
+            });
+
+            $("header nav a").click(function (e) { 
+                let page_url = $(this).attr("href");
+                $.get(page_url, function (res) {
+                    $("body").html(res);
+                    history.pushState(null, '', page_url)
+                });
+                return false;
+            });
 
             $("footer a").click(function () { 
                 let page_url = $(this).attr("href");
-                history.pushState(null, '', page_url)
                 $.get(page_url, function (res) {
                     $("body").html(res);
+                    history.pushState(null, '', page_url);
                 });
                 return false;
             });
         });
     </script>
-    <title>(Products Page) # (page #) | Core</title>
+    <title>(Products Page) <?= $category_type ?> (page <?= $page ?>) | Core</title>
 </head>
 
 <body>
@@ -55,8 +79,9 @@
     </nav>
     <div class="container">
         <aside>
-            <form action="#" method="POST">
-                <input type="search" name="search">
+            <form id="search-form" action="/products/process_search" method="POST">
+                <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
+                <input type="search" name="name">
             </form>
             <h2>Categories</h2>
             <ul>
@@ -68,13 +93,14 @@
         </aside>
         <main>
             <header>
-                <h1>#######</h1>
+                <h1><?= $category_type ?> (page <?= $page ?>)</h1>
                 <nav>
-                    <a href="#">first</a>
-                    <a href="#">prev</a>
-                    <span>#</span>
-                    <a href="#" id="last-child">next</a>
-                    <form action="#">
+                    <a href="/products/category/<?= $category_id ?>/1">first</a>
+                    <a href="/products/category/<?= $category_id ?>/<?= ($page <= 1) ? "1" : $page - 1 ?>">prev</a>
+                    <span><?= $page ?></span>
+                    <a href="/products/category/<?= $category_id ?>/<?= ($page >= $number_of_page) ? $number_of_page : $page + 1 ?>" id="last-child">next</a>
+                    <!-- <form action="#" method="POST">
+                    <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
                         <label>
                             Sort by:
                             <select name="sort">
@@ -82,7 +108,7 @@
                                 <option value="price">Most Popular</option>
                             </select>
                         </label>
-                    </form>
+                    </form> -->
                 </nav>
             </header>
             <div id="categorized_products">

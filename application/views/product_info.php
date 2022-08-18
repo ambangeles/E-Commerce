@@ -27,7 +27,7 @@
 
 <body>
     <nav class="main-nav">
-        <a href="/products/catalog">Core</a>
+        <a href="/products/category">Core</a>
         <span id="nav-login-cart">
             <a href="/">Log In</a>
             <a id="cart" href="/carts">Shopping Cart (#)</a>

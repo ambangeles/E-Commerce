@@ -31,6 +31,26 @@ class Product extends CI_Model {
         return $this->db->query($query, $values)->row_array(); 
     }
 
+    /* get the total products per categories when searching */
+    public function get_products_count_search($name, $category_id = "") {
+        /* triggered when show all category is selected */
+        if($category_id === "") {
+            $query = "SELECT COUNT(*) as count FROM products WHERE name LIKE ?";
+            $values =  array(
+                $this->security->xss_clean($name)
+            );
+        } else {
+            $query = "SELECT COUNT(*) as count FROM products WHERE category_id = ? AND name LIKE ?";
+            $values =  array(
+                $this->security->xss_clean($category_id),
+                $this->security->xss_clean($name)
+            );
+        }
+
+
+        return $this->db->query($query, $values)->row_array(); 
+    }
+
      /* get all the categories */
      public function get_products($page_first_result, $results_per_page) {
         $query = "SELECT * FROM products LIMIT ?, ?";
@@ -40,6 +60,37 @@ class Product extends CI_Model {
         );
         return $this->db->query($query, $values)->result_array(); 
     }
+
+    /* search from the database using the search input */
+    public function search($name, $category_id, $page_first_result, $results_per_page) {
+        if($category_id === "all") {
+            $query = "SELECT * FROM products WHERE name LIKE ? LIMIT ?, ?";
+            $values = array(
+                $this->security->xss_clean($name),
+                intval($this->security->xss_clean($page_first_result)),
+            intval($this->security->xss_clean($results_per_page))
+            );
+        } else {
+            $query = "SELECT * FROM products WHERE category_id = ? AND name LIKE ? LIMIT ?, ?";
+            $values = array(
+                $this->security->xss_clean($category_id),
+                $this->security->xss_clean($name),
+                intval($this->security->xss_clean($page_first_result)),
+            intval($this->security->xss_clean($results_per_page))
+            );
+        }
+
+
+        return $this->db->query($query, $values)->result_array();
+    }
+
+
+
+
+
+
+
+
 
     // /* check database if there is exsisting users. */
     // public function check_users() {

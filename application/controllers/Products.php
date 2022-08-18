@@ -12,26 +12,82 @@ class Products extends CI_Controller {
 		if($category_id === "") {
 			redirect("products/category/all/1");
 		} 
-		// if ($this->input->get() == NULL) {  
-        //     $page = "1";  
-        // } else {  
-        //     $page = $this->input->get()["page"];  
-        // }  
+
 		$results_per_page = 5;  
         $page_first_result = ($page-1) * $results_per_page;
 		$data["categories"] = $this->Product->get_categories();
 
 		if ($category_id === "all") {
-			$data["number_of_page"] = ceil($this->Product->get_products_count()["count"] / $results_per_page);  
+			$data["number_of_page"] = ceil($this->Product->get_products_count()["count"] / $results_per_page); 
+
+			if($page <= 0) {
+				$page = 1;
+			} elseif($page >= $data["number_of_page"]) {
+				$page = $data["number_of_page"];
+			}
+
 			$data["products"] = $this->Product->get_products($page_first_result, $results_per_page);
 		} else {
 			$data["number_of_page"] = ceil($this->Product->get_products_count($category_id)["count"] / $results_per_page);  
 
+			if($page <= 0) {
+				$page = 1;
+			} elseif($page >= $data["number_of_page"]) {
+				$page = $data["number_of_page"];
+			}
+
 			$data["products"] = $this->Product->get_products_by_category($category_id, $page_first_result, $results_per_page);
 		}
 
+		$data["page"] = $page;
+		$data["category_id"] = $category_id;
+		if($category_id == "all") {
+			$data["category_type"] = "all";
+		} else {
+			$data["category_type"] = $data["categories"][array_search($category_id, array_column($data["categories"], 'id'))]["type"];
+		}
 		$this->load->view("catalog", $data);
 	}
+
+	/*
+    Validate the input from search form. If no error, search from the database.
+    */
+    public function process_search($category_id = "", $page = "1") {
+		$name = $this->input->post()["name"];
+		if(!$name) {
+			$name = "";
+		}
+		
+ 		$results_per_page = 5;  
+        $page_first_result = ($page-1) * $results_per_page;
+		$data["categories"] = $this->Product->get_categories();
+
+		// $data["number_of_page"] = ceil($this->Product->get_products_count_search("%".$name."%", $category_id)["count"] / $results_per_page);  
+
+		// if($page <= 0) {
+		// 	$page = 1;
+		// } elseif($page >= $data["number_of_page"]) {
+		// 	$page = $data["number_of_page"];
+		// }
+
+		$data["products"] = $this->Product->search("%".$name."%", $category_id, $page_first_result, $results_per_page);
+		$data["number_of_page"] = ceil(count($data["products"])/ $results_per_page);  
+		if($page <= 0) {
+			$page = 1;
+		} elseif($page >= $data["number_of_page"]) {
+			$page = $data["number_of_page"];
+		}
+		$data["page"] = $page;
+		$data["category_id"] = $category_id;
+		if($category_id == "all") {
+			$data["category_type"] = "all";
+		} else {
+			$data["category_type"] = $data["categories"][array_search($category_id, array_column($data["categories"], 'id'))]["type"];
+		}
+		$this->load->view("catalog", $data);
+		// $data["products"] = $this->Product->search("%".$name."%", $this->input->post("category_id"));
+		// $this->load->view('partials/catalog-partial', $data);
+    }
 
 	// /* display the catalog page */
 	// public function catalog() {
