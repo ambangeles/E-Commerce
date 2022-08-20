@@ -40,6 +40,7 @@ body {
     width: 1200px;
     margin: 10px auto;
     min-height: 500px;
+    position: relative;
 }
     div aside {
         font-size: 1rem;
@@ -49,6 +50,14 @@ body {
         margin-right: 11px;
         background-color: #FFFFFF;
     }
+
+        #sort {
+            position: absolute;
+            top: 45px;
+            right: 20px;
+            z-index: 1;
+        }
+
         aside ul {
             list-style: none;
             padding-left: 0;
@@ -91,7 +100,7 @@ body {
                     border-right: 1px solid #FCA311;
                     font-weight: bold;
                 }
-                #last-child {
+                #next {
                     border-right: 0;
                     padding-right: 0;
                     border-left: 1px solid #FCA311;
